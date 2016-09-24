@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ProxyInfo;
 import android.os.Build;
 
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.SDKChecker;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.NullWifiConfigurationException;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.SdkNotSupportedException;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.WifiProxyInfoNotSettedException;
@@ -68,7 +69,7 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
 
     @Override
     public ProxySettings getProxySettings() throws NoSuchFieldException, IllegalAccessException {
-        return ProxySettings.valueOf(String.valueOf( ReflectionHelper.getDeclaredField(getIpConfigurationObject(),"proxySettings")));
+        return ProxySettings.valueOf(String.valueOf(ReflectionHelper.getDeclaredField(getIpConfigurationObject(), "proxySettings")));
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -79,12 +80,12 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public IpAssignment getIpAssignment() throws NoSuchFieldException, IllegalAccessException {
-        return IpAssignment.valueOf(String.valueOf(ReflectionHelper.getDeclaredField(getIpConfigurationObject(),"ipAssignment")));
+        return IpAssignment.valueOf(String.valueOf(ReflectionHelper.getDeclaredField(getIpConfigurationObject(), "ipAssignment")));
     }
 
     private ProxyInfo getProxyInfo()
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        return (ProxyInfo) ReflectionHelper.getMethodAndInvokeIt(wifiConfiguration,"getHttpProxy");
+        return (ProxyInfo) ReflectionHelper.getMethodAndInvokeIt(wifiConfiguration, "getHttpProxy");
     }
 
     private void setProxyInfo(ProxyInfo proxyInfo)

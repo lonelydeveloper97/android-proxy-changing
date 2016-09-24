@@ -1,21 +1,27 @@
 package com.lonelydeveloper97.proxychanger.proxy_change_realisation.wifi_network;
 
+import android.content.Context;
 import android.support.test.rule.ActivityTestRule;
 
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.CurrentProxyChangerGetter;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.SDKChecker;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.WifiProxyChanger;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.WifiProxyInfo;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.SdkNotSupportedException;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.ProxySettings;
 import com.lonelydeveloper97.proxychanger.MainActivity;
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.SmallUtills;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.NetworkHelper;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.NullWifiConfigurationException;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.WifiProxyInfoNotSettedException;
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.api_from_21_to_22.WifiConfigurationForApiFrom21To22;
 
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class WifiProxyInfoTest {
 
@@ -26,44 +32,43 @@ public class WifiProxyInfoTest {
     public ActivityTestRule mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
 
+    Context context;
 
     @Before
-    public void presetProxySettings() throws Exception{
-        if (!SmallUtills.getWifiNetworkInfo(mActivityRule.getActivity()).isConnected()) {
+    public void prepareAndPresetProxy() throws Exception {
+        context = mActivityRule.getActivity();
+
+        prepareExceptions();
+
+        WifiProxyChanger.clearProxySettings(context);
+        WifiProxyChanger.changeWifiProxySettings("localhost", 3030, context);
+    }
+
+    private void prepareExceptions() throws Exception {
+        if (!NetworkHelper.isWifiConnected(context)) {
             expectedException.expect(NullWifiConfigurationException.class);
         }
-        WifiProxyChanger.clearProxySettings( mActivityRule.getActivity());
-        WifiProxyChanger.changeWifiProxySettings("localhost", 3030, mActivityRule.getActivity());
+        if (!SDKChecker.isSupportedSDK()) {
+            expectedException.expect(SdkNotSupportedException.class);
+        }
+        if (CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).isProxySetted()) {
+            expectedException.expect(WifiProxyInfoNotSettedException.class);
+        }
     }
 
 
     @Test
     public void testGetHost() throws Exception {
-        if (!SmallUtills.getWifiNetworkInfo(mActivityRule.getActivity()).isConnected()) {
-            expectedException.expect(NullWifiConfigurationException.class);
-        }
-        if (WifiProxyChanger.chooseProxyChangerForCurrentApi(mActivityRule.getActivity()).isProxySetted()) {
-            expectedException.expect(WifiProxyInfoNotSettedException.class);
-        }
-        assertEquals("localhost",WifiProxyInfo.getHost(mActivityRule.getActivity()));
+        assertEquals("localhost", WifiProxyInfo.getHost(context));
     }
 
     @Test
     public void testGetPort() throws Exception {
-        if (!SmallUtills.getWifiNetworkInfo(mActivityRule.getActivity()).isConnected()) {
-            expectedException.expect(NullWifiConfigurationException.class);
-        }
-        if (WifiProxyChanger.chooseProxyChangerForCurrentApi(mActivityRule.getActivity()).isProxySetted()) {
-            expectedException.expect(WifiProxyInfoNotSettedException.class);
-        }
-        assertEquals(3030,WifiProxyInfo.getPort(mActivityRule.getActivity()));
+        assertEquals(3030, WifiProxyInfo.getPort(context));
     }
 
     @Test
     public void testGetProxySettings() throws Exception {
-        if (!SmallUtills.getWifiNetworkInfo(mActivityRule.getActivity()).isConnected()) {
-            expectedException.expect(NullWifiConfigurationException.class);
-        }
-        assertEquals(ProxySettings.STATIC,WifiProxyInfo.getProxySettings(mActivityRule.getActivity()));
+        assertEquals(ProxySettings.STATIC, WifiProxyInfo.getProxySettings(context));
     }
 }

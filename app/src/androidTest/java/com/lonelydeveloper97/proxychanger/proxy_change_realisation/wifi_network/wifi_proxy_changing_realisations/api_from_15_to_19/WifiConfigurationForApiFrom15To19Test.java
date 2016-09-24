@@ -1,18 +1,23 @@
 package com.lonelydeveloper97.proxychanger.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.api_from_15_to_19;
 
+import android.content.Context;
 import android.os.Build;
 import android.support.test.rule.ActivityTestRule;
 
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.SmallUtills;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.NetworkHelper;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.CurrentProxyChangerGetter;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.SDKChecker;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.NullWifiConfigurationException;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.SdkNotSupportedException;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.WifiProxyInfoNotSettedException;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.api_from_15_to_19.ProxyPropertiesContainer;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.api_from_15_to_19.WifiConfigurationForApiFrom15To19;
 import com.lonelydeveloper97.proxychanger.MainActivity;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import static org.junit.Assert.*;
 
 
 public class WifiConfigurationForApiFrom15To19Test {
@@ -22,18 +27,29 @@ public class WifiConfigurationForApiFrom15To19Test {
     @Rule
     public ActivityTestRule mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
+    Context context;
+
+
+    @Before
+    public void prepare() throws Exception {
+        context = mActivityRule.getActivity();
+
+        if (!NetworkHelper.isWifiConnected(context)) {
+            expectedException.expect(NullWifiConfigurationException.class);
+        }
+        if (CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).isProxySetted()) {
+            expectedException.expect(WifiProxyInfoNotSettedException.class);
+        }
+    }
 
 
     @Test
     public void testGetProxyPropertiesContainer() throws Exception {
-        if (Build.VERSION.SDK_INT > 15 && Build.VERSION.SDK_INT < 20) {
-            if (!SmallUtills.getWifiNetworkInfo(mActivityRule.getActivity()).isConnected()) {
-                expectedException.expect(NullWifiConfigurationException.class);
-            }
-            WifiConfigurationForApiFrom15To19 wifiConfigurationForApiFrom15To19
-                    = new WifiConfigurationForApiFrom15To19(mActivityRule.getActivity());
-            wifiConfigurationForApiFrom15To19.getProxyPropertiesContainer();
-        }
+        if (!SDKChecker.isJellyBeanOrKitkat())
+            return;
+        WifiConfigurationForApiFrom15To19 wifiConfigurationForApiFrom15To19
+                = new WifiConfigurationForApiFrom15To19(context);
+        ProxyPropertiesContainer proxyPropertiesContainer = wifiConfigurationForApiFrom15To19.getProxyPropertiesContainer();
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public class BaseWifiConfiguration {
     protected WifiConfiguration wifiConfiguration;
 
-    public BaseWifiConfiguration(WifiConfiguration wifiConfiguration)
+    protected BaseWifiConfiguration(WifiConfiguration wifiConfiguration)
             throws NullWifiConfigurationException {
         if (wifiConfiguration == null)
             throw new NullWifiConfigurationException();

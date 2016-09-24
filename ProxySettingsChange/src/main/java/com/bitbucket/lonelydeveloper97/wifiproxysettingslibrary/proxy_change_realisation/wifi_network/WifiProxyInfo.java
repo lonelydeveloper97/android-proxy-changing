@@ -13,17 +13,17 @@ public abstract class WifiProxyInfo {
 
     public static String getHost(Context context)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, SdkNotSupportedException, NoSuchFieldException, NullWifiConfigurationException {
-       return WifiProxyChanger.chooseProxyChangerForCurrentApi(context).getProxyHost();
+       return CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).getProxyHost();
     }
 
 
     public static int getPort(Context context)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, SdkNotSupportedException, NoSuchFieldException, NullWifiConfigurationException {
-        return WifiProxyChanger.chooseProxyChangerForCurrentApi(context).getProxyPort();
+        return CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).getProxyPort();
     }
 
     public static ProxySettings getProxySettings(Context context)
             throws SdkNotSupportedException, IllegalAccessException, NoSuchFieldException, NullWifiConfigurationException {
-        return WifiProxyChanger.chooseProxyChangerForCurrentApi(context).getProxySettings();
+        return CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).getProxySettings();
     }
 }

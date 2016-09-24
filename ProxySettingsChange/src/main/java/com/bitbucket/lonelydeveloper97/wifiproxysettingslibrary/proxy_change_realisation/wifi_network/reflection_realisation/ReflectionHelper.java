@@ -8,12 +8,18 @@ import java.util.ArrayList;
 
 public abstract class ReflectionHelper {
 
+
+    /**
+     * Uses for getting public fields with @hide annotation
+     * */
     public static Object getField(Object obj, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field f = obj.getClass().getField(name);
         return f.get(obj);
     }
-
+    /**
+     * Uses for getting private fields
+     * */
     public static Object getDeclaredField(Object obj, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field f = obj.getClass().getDeclaredField(name);
@@ -21,6 +27,9 @@ public abstract class ReflectionHelper {
         return f.get(obj);
     }
 
+    /**
+     * Uses for setting private fields
+     * */
     public static void setDeclaredField(Object obj, String name, Object value)
             throws NoSuchFieldException, IllegalAccessException {
         Field httpProxyField = obj.getClass().getDeclaredField(name);
@@ -28,12 +37,19 @@ public abstract class ReflectionHelper {
         httpProxyField.set(obj, value);
     }
 
+    /**
+     * Uses for setting Enum fields
+     * */
     public static void setEnumField(Object obj, String value, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         Field f = obj.getClass().getField(name);
         f.set(obj, Enum.valueOf((Class<Enum>) f.getType(), value));
     }
 
+    /**
+     * Uses for simplifying process of invoking private method
+     * Automatically detects args types and founds method to get
+     * */
     public static Object getMethodAndInvokeIt(Object obj, String methodName, Object... args)
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = obj.getClass().getDeclaredMethod(methodName,parameterTypes(args));
