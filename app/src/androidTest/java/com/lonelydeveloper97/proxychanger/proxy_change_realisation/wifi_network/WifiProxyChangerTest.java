@@ -45,17 +45,10 @@ public class WifiProxyChangerTest {
     @Before
     public void prepare() throws Exception {
         context = mActivityRule.getActivity();
-
-        if (!NetworkHelper.isWifiConnected(context)) {
-            expectedException.expect(NullWifiConfigurationException.class);
-        }
-        if (!SDKChecker.isSupportedSDK()) {
-            expectedException.expect(SdkNotSupportedException.class);
-        }
-        if (CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).isProxySetted()) {
-            expectedException.expect(WifiProxyInfoNotSettedException.class);
-        }
+        ExceptionsPreparer.prepareExceptions(expectedException,context);
     }
+
+
 
 
     @Test

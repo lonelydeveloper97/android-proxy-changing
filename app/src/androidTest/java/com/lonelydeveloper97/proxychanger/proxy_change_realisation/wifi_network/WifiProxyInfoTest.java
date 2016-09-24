@@ -16,6 +16,7 @@ import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_rea
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,24 +39,11 @@ public class WifiProxyInfoTest {
     public void prepareAndPresetProxy() throws Exception {
         context = mActivityRule.getActivity();
 
-        prepareExceptions();
+        ExceptionsPreparer.prepareExceptions(expectedException,context);
 
         WifiProxyChanger.clearProxySettings(context);
         WifiProxyChanger.changeWifiProxySettings("localhost", 3030, context);
     }
-
-    private void prepareExceptions() throws Exception {
-        if (!NetworkHelper.isWifiConnected(context)) {
-            expectedException.expect(NullWifiConfigurationException.class);
-        }
-        if (!SDKChecker.isSupportedSDK()) {
-            expectedException.expect(SdkNotSupportedException.class);
-        }
-        if (CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).isProxySetted()) {
-            expectedException.expect(WifiProxyInfoNotSettedException.class);
-        }
-    }
-
 
     @Test
     public void testGetHost() throws Exception {
@@ -70,5 +58,11 @@ public class WifiProxyInfoTest {
     @Test
     public void testGetProxySettings() throws Exception {
         assertEquals(ProxySettings.STATIC, WifiProxyInfo.getProxySettings(context));
+    }
+
+    @After
+    public void сlearSettings() throws IllegalAccessException, SdkNotSupportedException, NoSuchFieldException, NullWifiConfigurationException {
+        if (NetworkHelper.isWifiConnected(context))
+            WifiProxyChanger.clearProxySettings(context);
     }
 }
