@@ -77,7 +77,7 @@ public class WifiConfigurationForApiFrom15To19 extends BaseWifiConfiguration imp
     public boolean isProxySetted()
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             ApiNotSupportedException, NoSuchFieldException {
-        return proxyPropertiesContainer == null;
+        return !(proxyPropertiesContainer == null);
     }
 
     private LinkProperties getLinkProperties()

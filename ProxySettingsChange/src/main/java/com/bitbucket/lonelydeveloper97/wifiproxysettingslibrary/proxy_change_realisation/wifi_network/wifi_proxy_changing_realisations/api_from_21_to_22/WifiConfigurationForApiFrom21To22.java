@@ -63,7 +63,7 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
     public boolean isProxySetted()
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             ApiNotSupportedException, NoSuchFieldException {
-        return getProxyInfo() == null;
+        return !(getProxyInfo() == null);
     }
 
     @Override
