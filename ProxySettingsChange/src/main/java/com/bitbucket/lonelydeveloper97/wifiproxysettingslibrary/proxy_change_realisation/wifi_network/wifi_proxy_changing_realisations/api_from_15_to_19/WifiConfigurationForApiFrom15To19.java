@@ -4,8 +4,8 @@ import android.content.Context;
 import android.net.LinkProperties;
 
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.NullWifiConfigurationException;
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.SdkNotSupportedException;
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.WifiProxyInfoNotSettedException;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.ApiNotSupportedException;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.WifiProxyNotSettedException;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.reflection_realisation.ReflectionHelper;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.BaseWifiConfiguration;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.ProxyChanger;
@@ -54,18 +54,18 @@ public class WifiConfigurationForApiFrom15To19 extends BaseWifiConfiguration imp
     @Override
     public String getProxyHost()
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
-            SdkNotSupportedException, NoSuchFieldException {
+            ApiNotSupportedException, NoSuchFieldException {
         if (proxyPropertiesContainer == null)
-            throw new WifiProxyInfoNotSettedException();
+            throw new WifiProxyNotSettedException();
         return proxyPropertiesContainer.getHost();
     }
 
     @Override
     public int getProxyPort()
-            throws SdkNotSupportedException, NoSuchMethodException, IllegalAccessException,
+            throws ApiNotSupportedException, NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, NoSuchFieldException {
         if (proxyPropertiesContainer == null)
-            throw new WifiProxyInfoNotSettedException();
+            throw new WifiProxyNotSettedException();
         return proxyPropertiesContainer.getPort();
     }
 
@@ -76,7 +76,7 @@ public class WifiConfigurationForApiFrom15To19 extends BaseWifiConfiguration imp
     @Override
     public boolean isProxySetted()
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
-            SdkNotSupportedException, NoSuchFieldException {
+            ApiNotSupportedException, NoSuchFieldException {
         return proxyPropertiesContainer == null;
     }
 

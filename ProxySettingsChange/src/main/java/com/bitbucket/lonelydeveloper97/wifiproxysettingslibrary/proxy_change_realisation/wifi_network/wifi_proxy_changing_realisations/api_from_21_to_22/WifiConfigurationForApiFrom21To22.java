@@ -5,10 +5,9 @@ import android.content.Context;
 import android.net.ProxyInfo;
 import android.os.Build;
 
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.SDKChecker;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.NullWifiConfigurationException;
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.SdkNotSupportedException;
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.WifiProxyInfoNotSettedException;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.ApiNotSupportedException;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.WifiProxyNotSettedException;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.reflection_realisation.ReflectionHelper;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.BaseWifiConfiguration;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.ProxyChanger;
@@ -40,30 +39,30 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
         setProxyInfo(ProxyInfoConstructor.proxyInfo(host, port));
     }
 
-    @Override
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
     public String getProxyHost()
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, SdkNotSupportedException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ApiNotSupportedException {
         ProxyInfo info = getProxyInfo();
         if (info == null)
-            throw new WifiProxyInfoNotSettedException();
+            throw new WifiProxyNotSettedException();
         return info.getHost();
     }
 
-    @Override
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
     public int getProxyPort()
-            throws SdkNotSupportedException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws ApiNotSupportedException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         ProxyInfo info = getProxyInfo();
         if (info == null)
-            throw new WifiProxyInfoNotSettedException();
+            throw new WifiProxyNotSettedException();
         return info.getPort();
     }
 
     @Override
     public boolean isProxySetted()
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
-            SdkNotSupportedException, NoSuchFieldException {
+            ApiNotSupportedException, NoSuchFieldException {
         return getProxyInfo() == null;
     }
 
@@ -74,7 +73,7 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void setIpAssignment(IpAssignment ipAssignment)
-            throws NoSuchFieldException, IllegalAccessException, SdkNotSupportedException {
+            throws NoSuchFieldException, IllegalAccessException, ApiNotSupportedException {
         ReflectionHelper.setEnumField(getIpConfigurationObject(), ipAssignment.value, "ipAssignment");
     }
 

@@ -1,7 +1,7 @@
 package com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions;
 
-public class SdkNotSupportedException extends Exception {
-    public SdkNotSupportedException() {
+public class ApiNotSupportedException extends Exception {
+    public ApiNotSupportedException() {
         super("sdk version not supported");
     }
 }

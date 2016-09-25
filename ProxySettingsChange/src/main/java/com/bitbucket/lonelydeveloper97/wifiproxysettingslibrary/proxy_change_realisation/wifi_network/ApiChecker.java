@@ -2,10 +2,7 @@ package com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_re
 
 import android.os.Build;
 
-/**
- * Created by Valeriy on 24.09.2016.
- */
-public class SDKChecker {
+public class ApiChecker {
 
     public static boolean isJellyBeanOrKitkat(){
         return Build.VERSION.SDK_INT > 14 && Build.VERSION.SDK_INT < 20;
@@ -15,7 +12,7 @@ public class SDKChecker {
         return Build.VERSION.SDK_INT > 20 && Build.VERSION.SDK_INT < 23;
     }
 
-    public static boolean isSupportedSDK(){
+    public static boolean isSupportedApi(){
         return isJellyBeanOrKitkat()||isLolipop();
     }
 }

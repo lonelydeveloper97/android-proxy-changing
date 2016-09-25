@@ -3,7 +3,7 @@ package com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_re
 
 import android.net.wifi.WifiConfiguration;
 
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.SdkNotSupportedException;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.ApiNotSupportedException;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -15,11 +15,11 @@ public interface ProxyChanger {
 
     void setProxyHostAndPort(String host, int port) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException;
 
-    String getProxyHost() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, SdkNotSupportedException, NoSuchFieldException;
+    String getProxyHost() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ApiNotSupportedException, NoSuchFieldException;
 
-    int getProxyPort() throws SdkNotSupportedException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, NoSuchFieldException;
+    int getProxyPort() throws ApiNotSupportedException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, NoSuchFieldException;
 
-    boolean isProxySetted() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, SdkNotSupportedException, NoSuchFieldException;
+    boolean isProxySetted() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ApiNotSupportedException, NoSuchFieldException;
 
     WifiConfiguration getWifiConfiguration();
 }
