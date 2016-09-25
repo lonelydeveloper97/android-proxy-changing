@@ -15,4 +15,5 @@ public abstract class ApiChecker {
     public static boolean isSupportedApi() {
         return isJellyBeanOrKitkat() || isLolipop();
     }
+
 }

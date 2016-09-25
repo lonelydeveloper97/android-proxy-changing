@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public abstract class ReflectionHelper {
 
-
     /**
      * Uses for getting public fields with @hide annotation
      */
@@ -64,4 +63,5 @@ public abstract class ReflectionHelper {
         }
         return classes.toArray(new Class[args.length]);
     }
+
 }

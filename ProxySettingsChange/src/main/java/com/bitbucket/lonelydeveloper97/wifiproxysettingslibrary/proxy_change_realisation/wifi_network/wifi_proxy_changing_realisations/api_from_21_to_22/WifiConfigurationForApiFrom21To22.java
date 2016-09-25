@@ -71,6 +71,11 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
         return ProxySettings.valueOf(String.valueOf(ReflectionHelper.getDeclaredField(getIpConfigurationObject(), "proxySettings")));
     }
 
+    private Object getIpConfigurationObject()
+            throws NoSuchFieldException, IllegalAccessException {
+        return ReflectionHelper.getDeclaredField(wifiConfiguration, "mIpConfiguration");
+    }
+
     private ProxyInfo getProxyInfo()
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         return (ProxyInfo) ReflectionHelper.getMethodAndInvokeIt(wifiConfiguration, "getHttpProxy");
@@ -78,13 +83,7 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
 
     private void setProxyInfo(ProxyInfo proxyInfo)
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-        ReflectionHelper.setDeclaredField(getIpConfigurationObject(), "httpProxy", proxyInfo);
+        ReflectionHelper.getMethodAndInvokeIt(wifiConfiguration, "setHttpProxy", proxyInfo);
     }
-
-    private Object getIpConfigurationObject()
-            throws NoSuchFieldException, IllegalAccessException {
-        return ReflectionHelper.getDeclaredField(wifiConfiguration, "mIpConfiguration");
-    }
-
 
 }

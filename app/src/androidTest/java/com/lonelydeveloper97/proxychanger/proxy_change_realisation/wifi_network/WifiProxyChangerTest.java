@@ -25,21 +25,21 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class WifiProxyChangerTest {
 
-
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
     @Rule
     public ActivityTestRule mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
+
     Context context;
+
 
     @Before
     public void prepare() throws Exception {
         context = mActivityRule.getActivity();
         ExceptionsPreparer.prepareExceptions(expectedException, context);
     }
-
 
     @Test
     public void testChangeWifiStaticProxySettings() throws Exception {
@@ -51,7 +51,6 @@ public class WifiProxyChangerTest {
         assertEquals(testIp, WifiProxyInfo.getHost(context));
         assertEquals(testPort, WifiProxyInfo.getPort(context));
     }
-
 
     @Test
     public void testProxySettingsClear() throws Exception {

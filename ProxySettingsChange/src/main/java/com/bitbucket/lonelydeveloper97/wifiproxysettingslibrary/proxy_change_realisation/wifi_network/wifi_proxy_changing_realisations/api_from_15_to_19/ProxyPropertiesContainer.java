@@ -9,6 +9,7 @@ public class ProxyPropertiesContainer {
 
     Object proxyProperties;
 
+
     ProxyPropertiesContainer(Object proxyProperties) {
         this.proxyProperties = proxyProperties;
     }
@@ -39,7 +40,6 @@ public class ProxyPropertiesContainer {
             throws NoSuchFieldException, IllegalAccessException {
         return (String) ReflectionHelper.getDeclaredField(proxyProperties, "mExclusionList");
     }
-
 
     public Object getProxyProperties() {
         return proxyProperties;

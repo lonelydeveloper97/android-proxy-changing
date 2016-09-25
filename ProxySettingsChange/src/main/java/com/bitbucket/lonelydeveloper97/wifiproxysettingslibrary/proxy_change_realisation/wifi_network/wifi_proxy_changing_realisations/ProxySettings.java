@@ -14,7 +14,10 @@ public enum ProxySettings {
     /* Use a Pac based proxy.
      */
     PAC("PAC");
+
+
     String value = "";
+
 
     ProxySettings(String value) {
         this.value = value;
@@ -23,4 +26,5 @@ public enum ProxySettings {
     public String getValue() {
         return value;
     }
+
 }

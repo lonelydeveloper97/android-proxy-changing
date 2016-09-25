@@ -22,4 +22,5 @@ public interface ProxyChanger {
     boolean isProxySetted() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ApiNotSupportedException, NoSuchFieldException;
 
     WifiConfiguration getWifiConfiguration();
+
 }

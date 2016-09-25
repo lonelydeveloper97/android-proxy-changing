@@ -32,12 +32,12 @@ public class WifiProxyInfoTest {
 
     Context context;
 
+
     @Before
     public void prepareAndPresetProxy() throws Exception {
         context = mActivityRule.getActivity();
 
         ExceptionsPreparer.prepareExceptions(expectedException, context);
-
 
         if (ApiChecker.isSupportedApi()) {
             WifiProxyChanger.clearProxySettings(context);
@@ -60,10 +60,10 @@ public class WifiProxyInfoTest {
         assertEquals(ProxySettings.STATIC, WifiProxyInfo.getProxySettings(context));
     }
 
-
     @After
     public void сlearSettings() throws Exception {
         if (NetworkHelper.isWifiConnected(context) && ApiChecker.isSupportedApi())
             WifiProxyChanger.clearProxySettings(context);
     }
+
 }

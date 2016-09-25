@@ -22,20 +22,22 @@ import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 public class CurrentProxyChangerGetterTest {
+
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
     @Rule
     public ActivityTestRule mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
+
     Context context;
+
 
     @Before
     public void prepare() throws Exception {
         context = mActivityRule.getActivity();
         ExceptionsPreparer.prepareExceptions(expectedException, context);
     }
-
 
     @Test
     public void testChooseProxyChangerForCurrentApi() throws Exception {
@@ -50,4 +52,5 @@ public class CurrentProxyChangerGetterTest {
             assertTrue(proxyChanger instanceof WifiConfigurationForApiFrom21To22);
         }
     }
+
 }

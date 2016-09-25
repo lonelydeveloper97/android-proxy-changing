@@ -23,4 +23,5 @@ public abstract class ExceptionsPreparer {
             expectedException.expect(WifiProxyNotSettedException.class);
         }
     }
+
 }

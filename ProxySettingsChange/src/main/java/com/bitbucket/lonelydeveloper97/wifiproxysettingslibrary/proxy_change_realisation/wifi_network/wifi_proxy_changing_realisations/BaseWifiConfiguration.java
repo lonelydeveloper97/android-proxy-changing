@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseWifiConfiguration {
+
     protected WifiConfiguration wifiConfiguration;
+
 
     protected BaseWifiConfiguration(WifiConfiguration wifiConfiguration)
             throws NullWifiConfigurationException {
@@ -44,4 +46,5 @@ public class BaseWifiConfiguration {
         }
         return null;
     }
+
 }

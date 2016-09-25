@@ -25,4 +25,5 @@ public abstract class ProxyInfoConstructor {
             throws ClassNotFoundException, NoSuchMethodException {
         return Class.forName("android.net.ProxyInfo").getConstructor(String.class, int.class, String.class);
     }
+
 }

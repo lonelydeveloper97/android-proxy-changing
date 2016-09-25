@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 
 public abstract class WifiProxyChanger {
 
-
     public static void changeWifiStaticProxySettings(String host, int port, Context context)
             throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
             InstantiationException, IllegalAccessException, NoSuchFieldException, ApiNotSupportedException, NullWifiConfigurationException {
@@ -51,4 +50,5 @@ public abstract class WifiProxyChanger {
         currentWifiManager.saveConfiguration();
         currentWifiManager.reconnect();
     }
+
 }
