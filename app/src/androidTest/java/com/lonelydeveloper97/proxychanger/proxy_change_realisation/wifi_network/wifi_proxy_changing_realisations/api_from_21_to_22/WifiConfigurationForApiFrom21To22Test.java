@@ -37,7 +37,7 @@ public class WifiConfigurationForApiFrom21To22Test {
         if (!NetworkHelper.isWifiConnected(context)) {
             expectedException.expect(NullWifiConfigurationException.class);
         }
-        if (CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).isProxySetted()) {
+        if (!CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).isProxySetted()) {
             expectedException.expect(WifiProxyNotSettedException.class);
         }
     }
