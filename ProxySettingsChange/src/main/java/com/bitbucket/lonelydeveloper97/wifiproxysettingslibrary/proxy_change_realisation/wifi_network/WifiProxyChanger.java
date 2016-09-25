@@ -15,15 +15,15 @@ import java.lang.reflect.InvocationTargetException;
 public abstract class WifiProxyChanger {
 
 
-    public static void changeWifiProxySettings(String host, int port, Context context)
+    public static void changeWifiStaticProxySettings(String host, int port, Context context)
             throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
             InstantiationException, IllegalAccessException, NoSuchFieldException, ApiNotSupportedException, NullWifiConfigurationException {
         updateWifiWithNewConfiguration(getWifiConfigurationWithUpdatedProxySettings(host, port, context), context);
     }
 
-
     public static void clearProxySettings(Context context)
-            throws IllegalAccessException, ApiNotSupportedException, NoSuchFieldException, NullWifiConfigurationException {
+            throws IllegalAccessException, ApiNotSupportedException, NoSuchFieldException, NullWifiConfigurationException,
+            ClassNotFoundException, NoSuchMethodException, InstantiationException, InvocationTargetException {
         updateWifiWithNewConfiguration(getWifiConfigurationWithNoneProxySettings(context), context);
     }
 
@@ -37,8 +37,10 @@ public abstract class WifiProxyChanger {
     }
 
     private static WifiConfiguration getWifiConfigurationWithNoneProxySettings(Context context)
-            throws NoSuchFieldException, IllegalAccessException, ApiNotSupportedException, NullWifiConfigurationException {
+            throws NoSuchFieldException, IllegalAccessException, ApiNotSupportedException, NullWifiConfigurationException,
+            ClassNotFoundException, NoSuchMethodException, InstantiationException, InvocationTargetException {
         ProxyChanger proxyChanger = CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context);
+        proxyChanger.setProxyHostAndPort("", 0);
         proxyChanger.setProxySettings(ProxySettings.NONE);
         return proxyChanger.getWifiConfiguration();
     }

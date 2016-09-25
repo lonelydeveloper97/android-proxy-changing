@@ -41,7 +41,7 @@ public class ProxyPropertiesContainer {
     }
 
 
-    public Object getProxyProperties(){
+    public Object getProxyProperties() {
         return proxyProperties;
     }
 

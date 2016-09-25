@@ -5,11 +5,10 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.NetworkHelper;
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.ApiChecker;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.CurrentProxyChangerGetter;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.WifiProxyChanger;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.WifiProxyInfo;
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.NullWifiConfigurationException;
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.ApiNotSupportedException;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.ProxySettings;
 import com.lonelydeveloper97.proxychanger.MainActivity;
 
@@ -38,18 +37,16 @@ public class WifiProxyChangerTest {
     @Before
     public void prepare() throws Exception {
         context = mActivityRule.getActivity();
-        ExceptionsPreparer.prepareExceptions(expectedException,context);
+        ExceptionsPreparer.prepareExceptions(expectedException, context);
     }
 
 
-
-
     @Test
-    public void testChangeWifiProxySettings() throws Exception {
+    public void testChangeWifiStaticProxySettings() throws Exception {
         String testIp = RandomValuesGenerator.randomIp();
         int testPort = RandomValuesGenerator.randomPort();
 
-        WifiProxyChanger.changeWifiProxySettings(testIp, testPort, context);
+        WifiProxyChanger.changeWifiStaticProxySettings(testIp, testPort, context);
 
         assertEquals(testIp, WifiProxyInfo.getHost(context));
         assertEquals(testPort, WifiProxyInfo.getPort(context));
@@ -61,7 +58,7 @@ public class WifiProxyChangerTest {
         String testIp = RandomValuesGenerator.randomIp();
         int testPort = RandomValuesGenerator.randomPort();
 
-        WifiProxyChanger.changeWifiProxySettings(testIp, testPort, context);
+        WifiProxyChanger.changeWifiStaticProxySettings(testIp, testPort, context);
         WifiProxyChanger.clearProxySettings(context);
 
         assertEquals(ProxySettings.NONE, CurrentProxyChangerGetter
@@ -70,8 +67,8 @@ public class WifiProxyChangerTest {
     }
 
     @After
-    public void сlearSettings() throws IllegalAccessException, ApiNotSupportedException, NoSuchFieldException, NullWifiConfigurationException {
-        if (NetworkHelper.isWifiConnected(context))
+    public void сlearSettings() throws Exception {
+        if (NetworkHelper.isWifiConnected(context) && ApiChecker.isSupportedApi())
             WifiProxyChanger.clearProxySettings(context);
     }
 

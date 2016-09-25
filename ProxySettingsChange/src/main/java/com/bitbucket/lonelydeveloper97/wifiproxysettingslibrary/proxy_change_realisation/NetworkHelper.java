@@ -15,7 +15,7 @@ public abstract class NetworkHelper {
 
     public static NetworkInfo getWifiNetworkInfo(Context context) {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-       return connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
     }
 
     public static NetworkInfo getMobileNetworkInfo(Context context) {
@@ -23,7 +23,7 @@ public abstract class NetworkHelper {
         return connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
     }
 
-    public static boolean isWifiConnected(Context context){
+    public static boolean isWifiConnected(Context context) {
         return NetworkHelper.getWifiNetworkInfo(context).isConnected();
     }
 

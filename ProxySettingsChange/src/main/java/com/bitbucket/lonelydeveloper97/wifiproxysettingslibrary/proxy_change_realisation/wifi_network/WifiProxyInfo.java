@@ -12,7 +12,7 @@ public abstract class WifiProxyInfo {
 
     public static String getHost(Context context)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ApiNotSupportedException, NoSuchFieldException, NullWifiConfigurationException {
-       return CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).getProxyHost();
+        return CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).getProxyHost();
     }
 
 
@@ -25,4 +25,6 @@ public abstract class WifiProxyInfo {
             throws ApiNotSupportedException, IllegalAccessException, NoSuchFieldException, NullWifiConfigurationException {
         return CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).getProxySettings();
     }
+
+
 }

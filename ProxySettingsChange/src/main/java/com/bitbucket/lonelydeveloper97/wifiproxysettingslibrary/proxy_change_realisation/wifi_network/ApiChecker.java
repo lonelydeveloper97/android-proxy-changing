@@ -2,17 +2,17 @@ package com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_re
 
 import android.os.Build;
 
-public class ApiChecker {
+public abstract class ApiChecker {
 
-    public static boolean isJellyBeanOrKitkat(){
+    public static boolean isJellyBeanOrKitkat() {
         return Build.VERSION.SDK_INT > 14 && Build.VERSION.SDK_INT < 20;
     }
 
-    public static boolean isLolipop(){
+    public static boolean isLolipop() {
         return Build.VERSION.SDK_INT > 20 && Build.VERSION.SDK_INT < 23;
     }
 
-    public static boolean isSupportedApi(){
-        return isJellyBeanOrKitkat()||isLolipop();
+    public static boolean isSupportedApi() {
+        return isJellyBeanOrKitkat() || isLolipop();
     }
 }

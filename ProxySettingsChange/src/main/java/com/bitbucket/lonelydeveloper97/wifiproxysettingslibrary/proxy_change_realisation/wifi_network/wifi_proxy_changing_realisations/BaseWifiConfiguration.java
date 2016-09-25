@@ -6,6 +6,7 @@ import android.net.wifi.WifiManager;
 
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.NullWifiConfigurationException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BaseWifiConfiguration {
@@ -29,16 +30,14 @@ public class BaseWifiConfiguration {
 
     private static WifiConfiguration getCurrentWifiConfigurationFromContext(Context context) {
         final WifiManager manager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        if (!manager.isWifiEnabled())
+        List<WifiConfiguration> wifiConfigurationList = manager.getConfiguredNetworks();
+        if (!manager.isWifiEnabled() || wifiConfigurationList == null || wifiConfigurationList.isEmpty())
             return null;
-        return findWifiConfigurationByNetworkId(manager.getConfiguredNetworks(), manager.getConnectionInfo().getNetworkId());
+        return findWifiConfigurationByNetworkId(wifiConfigurationList, manager.getConnectionInfo().getNetworkId());
 
     }
 
     private static WifiConfiguration findWifiConfigurationByNetworkId(List<WifiConfiguration> wifiConfigurationList, int networkId) {
-        if(wifiConfigurationList == null || wifiConfigurationList.isEmpty()){
-            return null;
-        }
         for (WifiConfiguration wifiConf : wifiConfigurationList) {
             if (wifiConf.networkId == networkId)
                 return wifiConf;

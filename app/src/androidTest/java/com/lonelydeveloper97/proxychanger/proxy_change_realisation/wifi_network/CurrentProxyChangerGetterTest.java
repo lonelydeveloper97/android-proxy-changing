@@ -14,6 +14,7 @@ import com.lonelydeveloper97.proxychanger.MainActivity;
 
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
@@ -32,19 +33,20 @@ public class CurrentProxyChangerGetterTest {
     @Before
     public void prepare() throws Exception {
         context = mActivityRule.getActivity();
-        ExceptionsPreparer.prepareExceptions(expectedException,context);
+        ExceptionsPreparer.prepareExceptions(expectedException, context);
     }
 
 
-    @org.junit.Test
+    @Test
     public void testChooseProxyChangerForCurrentApi() throws Exception {
         ProxyChanger proxyChanger = CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context);
         WifiManager manager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
-        assertEquals(manager.getConnectionInfo().getNetworkId(),proxyChanger.getWifiConfiguration().networkId);
-        if(ApiChecker.isJellyBeanOrKitkat()){
+        assertEquals(manager.getConnectionInfo().getNetworkId(), proxyChanger.getWifiConfiguration().networkId);
+
+        if (ApiChecker.isJellyBeanOrKitkat()) {
             assertTrue(proxyChanger instanceof WifiConfigurationForApiFrom15To19);
-        }else if(ApiChecker.isLolipop()){
+        } else if (ApiChecker.isLolipop()) {
             assertTrue(proxyChanger instanceof WifiConfigurationForApiFrom21To22);
         }
     }

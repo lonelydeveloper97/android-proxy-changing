@@ -71,17 +71,6 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
         return ProxySettings.valueOf(String.valueOf(ReflectionHelper.getDeclaredField(getIpConfigurationObject(), "proxySettings")));
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setIpAssignment(IpAssignment ipAssignment)
-            throws NoSuchFieldException, IllegalAccessException, ApiNotSupportedException {
-        ReflectionHelper.setEnumField(getIpConfigurationObject(), ipAssignment.value, "ipAssignment");
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public IpAssignment getIpAssignment() throws NoSuchFieldException, IllegalAccessException {
-        return IpAssignment.valueOf(String.valueOf(ReflectionHelper.getDeclaredField(getIpConfigurationObject(), "ipAssignment")));
-    }
-
     private ProxyInfo getProxyInfo()
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         return (ProxyInfo) ReflectionHelper.getMethodAndInvokeIt(wifiConfiguration, "getHttpProxy");

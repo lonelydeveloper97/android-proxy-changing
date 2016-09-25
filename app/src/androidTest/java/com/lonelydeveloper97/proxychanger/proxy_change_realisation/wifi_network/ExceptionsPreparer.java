@@ -15,13 +15,11 @@ import org.junit.rules.ExpectedException;
 public abstract class ExceptionsPreparer {
 
     public static void prepareExceptions(ExpectedException expectedException, Context context) throws Exception {
-        if (!NetworkHelper.isWifiConnected(context)) {
-            expectedException.expect(NullWifiConfigurationException.class);
-        }
         if (!ApiChecker.isSupportedApi()) {
             expectedException.expect(ApiNotSupportedException.class);
-        }
-        if (!CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).isProxySetted()) {
+        } else if (!NetworkHelper.isWifiConnected(context)) {
+            expectedException.expect(NullWifiConfigurationException.class);
+        } else if (!CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context).isProxySetted()) {
             expectedException.expect(WifiProxyNotSettedException.class);
         }
     }

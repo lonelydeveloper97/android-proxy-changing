@@ -4,13 +4,12 @@ import android.content.Context;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.ApiChecker;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.WifiProxyChanger;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.WifiProxyInfo;
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.ApiNotSupportedException;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.wifi_proxy_changing_realisations.ProxySettings;
 import com.lonelydeveloper97.proxychanger.MainActivity;
 import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.NetworkHelper;
-import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_realisation.wifi_network.exceptions.NullWifiConfigurationException;
 
 import static org.junit.Assert.*;
 
@@ -37,10 +36,13 @@ public class WifiProxyInfoTest {
     public void prepareAndPresetProxy() throws Exception {
         context = mActivityRule.getActivity();
 
-        ExceptionsPreparer.prepareExceptions(expectedException,context);
+        ExceptionsPreparer.prepareExceptions(expectedException, context);
 
-        WifiProxyChanger.clearProxySettings(context);
-        WifiProxyChanger.changeWifiProxySettings("localhost", 3030, context);
+
+        if (ApiChecker.isSupportedApi()) {
+            WifiProxyChanger.clearProxySettings(context);
+            WifiProxyChanger.changeWifiStaticProxySettings("localhost", 3030, context);
+        }
     }
 
     @Test
@@ -58,9 +60,10 @@ public class WifiProxyInfoTest {
         assertEquals(ProxySettings.STATIC, WifiProxyInfo.getProxySettings(context));
     }
 
+
     @After
-    public void сlearSettings() throws IllegalAccessException, ApiNotSupportedException, NoSuchFieldException, NullWifiConfigurationException {
-        if (NetworkHelper.isWifiConnected(context))
+    public void сlearSettings() throws Exception {
+        if (NetworkHelper.isWifiConnected(context) && ApiChecker.isSupportedApi())
             WifiProxyChanger.clearProxySettings(context);
     }
 }

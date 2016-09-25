@@ -69,10 +69,6 @@ public class WifiConfigurationForApiFrom15To19 extends BaseWifiConfiguration imp
         return proxyPropertiesContainer.getPort();
     }
 
-    public ProxyPropertiesContainer getProxyPropertiesContainer() {
-        return proxyPropertiesContainer;
-    }
-
     @Override
     public boolean isProxySetted()
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
