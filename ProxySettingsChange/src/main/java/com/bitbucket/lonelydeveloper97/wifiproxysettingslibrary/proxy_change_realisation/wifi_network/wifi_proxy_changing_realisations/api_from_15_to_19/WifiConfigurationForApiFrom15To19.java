@@ -36,7 +36,8 @@ public class WifiConfigurationForApiFrom15To19 extends BaseWifiConfiguration imp
     }
 
     @Override
-    public ProxySettings getProxySettings() throws NoSuchFieldException, IllegalAccessException {
+    public ProxySettings getProxySettings()
+            throws NoSuchFieldException, IllegalAccessException {
         return ProxySettings.valueOf(String.valueOf(ReflectionHelper.getDeclaredField(wifiConfiguration, "proxySettings")));
     }
 

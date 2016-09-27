@@ -16,33 +16,32 @@ public abstract class WifiProxyChanger {
 
     public static void changeWifiStaticProxySettings(String host, int port, Context context)
             throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
-            InstantiationException, IllegalAccessException, NoSuchFieldException, ApiNotSupportedException, NullWifiConfigurationException {
-        updateWifiWithNewConfiguration(getWifiConfigurationWithUpdatedProxySettings(host, port, context), context);
+            InstantiationException, IllegalAccessException, NoSuchFieldException,
+            ApiNotSupportedException, NullWifiConfigurationException {
+        updateWifiWithNewConfiguration(
+                getCurrentWifiConfiguretionWithUpdatedSettings(host, port, ProxySettings.STATIC, context),
+                context);
     }
 
     public static void clearProxySettings(Context context)
-            throws IllegalAccessException, ApiNotSupportedException, NoSuchFieldException, NullWifiConfigurationException,
-            ClassNotFoundException, NoSuchMethodException, InstantiationException, InvocationTargetException {
-        updateWifiWithNewConfiguration(getWifiConfigurationWithNoneProxySettings(context), context);
+            throws IllegalAccessException, ApiNotSupportedException, NoSuchFieldException,
+            NullWifiConfigurationException, ClassNotFoundException, NoSuchMethodException,
+            InstantiationException, InvocationTargetException {
+        updateWifiWithNewConfiguration(
+                getCurrentWifiConfiguretionWithUpdatedSettings("", 0, ProxySettings.NONE, context),
+                context);
     }
 
-    private static WifiConfiguration getWifiConfigurationWithUpdatedProxySettings(String host, int port, Context context)
-            throws IllegalAccessException, ApiNotSupportedException, NoSuchFieldException,
-            ClassNotFoundException, NoSuchMethodException, InstantiationException, InvocationTargetException, NullWifiConfigurationException {
+    private static WifiConfiguration getCurrentWifiConfiguretionWithUpdatedSettings(String host, int port, ProxySettings proxySettings, Context context)
+            throws ApiNotSupportedException, IllegalAccessException, NullWifiConfigurationException,
+            NoSuchFieldException, ClassNotFoundException, NoSuchMethodException,
+            InstantiationException, InvocationTargetException {
         ProxyChanger proxyChanger = CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context);
         proxyChanger.setProxyHostAndPort(host, port);
-        proxyChanger.setProxySettings(ProxySettings.STATIC);
+        proxyChanger.setProxySettings(proxySettings);
         return proxyChanger.getWifiConfiguration();
     }
 
-    private static WifiConfiguration getWifiConfigurationWithNoneProxySettings(Context context)
-            throws NoSuchFieldException, IllegalAccessException, ApiNotSupportedException, NullWifiConfigurationException,
-            ClassNotFoundException, NoSuchMethodException, InstantiationException, InvocationTargetException {
-        ProxyChanger proxyChanger = CurrentProxyChangerGetter.chooseProxyChangerForCurrentApi(context);
-        proxyChanger.setProxyHostAndPort("", 0);
-        proxyChanger.setProxySettings(ProxySettings.NONE);
-        return proxyChanger.getWifiConfiguration();
-    }
 
     private static void updateWifiWithNewConfiguration(WifiConfiguration wifiConfiguration, Context context) {
         WifiManager currentWifiManager = NetworkHelper.getWifiManager(context);

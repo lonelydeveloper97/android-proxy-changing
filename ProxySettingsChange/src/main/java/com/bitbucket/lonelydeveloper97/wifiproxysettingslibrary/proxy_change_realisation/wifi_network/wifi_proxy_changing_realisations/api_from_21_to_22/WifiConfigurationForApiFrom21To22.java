@@ -18,12 +18,20 @@ import java.lang.reflect.InvocationTargetException;
 
 public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration implements ProxyChanger {
 
-    public WifiConfigurationForApiFrom21To22(Context context) throws NullWifiConfigurationException {
+    public WifiConfigurationForApiFrom21To22(Context context)
+            throws NullWifiConfigurationException {
         super(context);
     }
 
-    public static WifiConfigurationForApiFrom21To22 createFromCurrentContext(Context context) throws NullWifiConfigurationException {
+    public static WifiConfigurationForApiFrom21To22 createFromCurrentContext(Context context)
+            throws NullWifiConfigurationException {
         return new WifiConfigurationForApiFrom21To22(context);
+    }
+
+    @Override
+    public ProxySettings getProxySettings()
+            throws NoSuchFieldException, IllegalAccessException {
+        return ProxySettings.valueOf(String.valueOf(ReflectionHelper.getDeclaredField(getIpConfigurationObject(), "proxySettings")));
     }
 
     @Override
@@ -34,15 +42,16 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
 
     @Override
     public void setProxyHostAndPort(String host, int port)
-            throws ClassNotFoundException, NoSuchMethodException,
-            InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
+            throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
+            InstantiationException, IllegalAccessException, NoSuchFieldException {
         setProxyInfo(ProxyInfoConstructor.proxyInfo(host, port));
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public String getProxyHost()
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ApiNotSupportedException {
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
+            ApiNotSupportedException {
         ProxyInfo info = getProxyInfo();
         if (info == null)
             throw new WifiProxyNotSettedException();
@@ -52,7 +61,8 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public int getProxyPort()
-            throws ApiNotSupportedException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+            throws ApiNotSupportedException, NoSuchMethodException, IllegalAccessException,
+            InvocationTargetException {
         ProxyInfo info = getProxyInfo();
         if (info == null)
             throw new WifiProxyNotSettedException();
@@ -66,11 +76,6 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
         return !(getProxyInfo() == null);
     }
 
-    @Override
-    public ProxySettings getProxySettings() throws NoSuchFieldException, IllegalAccessException {
-        return ProxySettings.valueOf(String.valueOf(ReflectionHelper.getDeclaredField(getIpConfigurationObject(), "proxySettings")));
-    }
-
     private Object getIpConfigurationObject()
             throws NoSuchFieldException, IllegalAccessException {
         return ReflectionHelper.getDeclaredField(wifiConfiguration, "mIpConfiguration");
@@ -82,7 +87,8 @@ public class WifiConfigurationForApiFrom21To22 extends BaseWifiConfiguration imp
     }
 
     private void setProxyInfo(ProxyInfo proxyInfo)
-            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException,
+            NoSuchFieldException {
         ReflectionHelper.getMethodAndInvokeIt(wifiConfiguration, "setHttpProxy", proxyInfo);
     }
 

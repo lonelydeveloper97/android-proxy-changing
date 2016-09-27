@@ -18,7 +18,8 @@ public abstract class ProxyPropertiesConstructor {
         return proxyPropertiesConstructor().newInstance(host, port, exclList);
     }
 
-    private static Constructor proxyPropertiesConstructor() throws ClassNotFoundException, NoSuchMethodException {
+    private static Constructor proxyPropertiesConstructor()
+            throws ClassNotFoundException, NoSuchMethodException {
         return Class.forName("android.net.ProxyProperties").getConstructor(String.class, int.class, String.class);
     }
 

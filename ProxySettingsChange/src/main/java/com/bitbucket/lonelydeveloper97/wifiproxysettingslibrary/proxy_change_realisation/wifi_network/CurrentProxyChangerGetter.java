@@ -12,7 +12,8 @@ import com.bitbucket.lonelydeveloper97.wifiproxysettingslibrary.proxy_change_rea
 public abstract class CurrentProxyChangerGetter {
 
     public static ProxyChanger chooseProxyChangerForCurrentApi(Context context)
-            throws ApiNotSupportedException, NoSuchFieldException, IllegalAccessException, NullWifiConfigurationException {
+            throws ApiNotSupportedException, NoSuchFieldException, IllegalAccessException,
+            NullWifiConfigurationException {
         if (ApiChecker.isJellyBeanOrKitkat()) {
             return WifiConfigurationForApiFrom15To19.createFromCurrentContext(context);
         } else if (ApiChecker.isLolipop()) {

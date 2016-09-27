@@ -9,17 +9,27 @@ import java.lang.reflect.InvocationTargetException;
 
 public interface ProxyChanger {
 
-    void setProxySettings(ProxySettings proxySettings) throws NoSuchFieldException, IllegalAccessException;
+    void setProxySettings(ProxySettings proxySettings)
+            throws NoSuchFieldException, IllegalAccessException;
 
-    ProxySettings getProxySettings() throws NoSuchFieldException, IllegalAccessException;
+    ProxySettings getProxySettings()
+            throws NoSuchFieldException, IllegalAccessException;
 
-    void setProxyHostAndPort(String host, int port) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException;
+    void setProxyHostAndPort(String host, int port)
+            throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
+            InstantiationException, IllegalAccessException, NoSuchFieldException;
 
-    String getProxyHost() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ApiNotSupportedException, NoSuchFieldException;
+    String getProxyHost()
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
+            ApiNotSupportedException, NoSuchFieldException;
 
-    int getProxyPort() throws ApiNotSupportedException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, NoSuchFieldException;
+    int getProxyPort()
+            throws ApiNotSupportedException, NoSuchMethodException, IllegalAccessException,
+            InvocationTargetException, NoSuchFieldException;
 
-    boolean isProxySetted() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ApiNotSupportedException, NoSuchFieldException;
+    boolean isProxySetted()
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
+            ApiNotSupportedException, NoSuchFieldException;
 
     WifiConfiguration getWifiConfiguration();
 

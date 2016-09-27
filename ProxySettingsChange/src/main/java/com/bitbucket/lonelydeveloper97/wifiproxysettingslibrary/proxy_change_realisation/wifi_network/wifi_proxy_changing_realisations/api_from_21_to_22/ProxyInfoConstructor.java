@@ -17,8 +17,9 @@ public abstract class ProxyInfoConstructor {
     public static ProxyInfo proxyInfo(String host, int port, String exclude)
             throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, InstantiationException {
-        Object newhttpProxyObj = proxyInfoConstructor().newInstance(host, port, exclude);
-        return (ProxyInfo) newhttpProxyObj;
+        Object newProxyInfo = proxyInfoConstructor().newInstance(host, port, exclude);
+        return (ProxyInfo) newProxyInfo;
+
     }
 
     private static Constructor proxyInfoConstructor()
