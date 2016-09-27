@@ -11,53 +11,53 @@ public abstract class ReflectionHelper {
     /**
      * Used for getting public fields with @hide annotation
      */
-    public static Object getField(Object obj, String name)
+    public static Object getField(Object object, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException,
             IllegalAccessException {
-        Field f = obj.getClass().getField(name);
-        return f.get(obj);
+        Field field = object.getClass().getField(name);
+        return field.get(object);
     }
 
     /**
      * Used for getting private fields
      */
-    public static Object getDeclaredField(Object obj, String name)
+    public static Object getDeclaredField(Object object, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException,
             IllegalAccessException {
-        Field f = obj.getClass().getDeclaredField(name);
-        f.setAccessible(true);
-        return f.get(obj);
+        Field declaredField = object.getClass().getDeclaredField(name);
+        declaredField.setAccessible(true);
+        return declaredField.get(object);
     }
 
     /**
      * Used for setting private fields
      */
-    public static void setDeclaredField(Object obj, String name, Object value)
+    public static void setDeclaredField(Object object, String name, Object value)
             throws NoSuchFieldException, IllegalAccessException {
-        Field httpProxyField = obj.getClass().getDeclaredField(name);
-        httpProxyField.setAccessible(true);
-        httpProxyField.set(obj, value);
+        Field declaredField = object.getClass().getDeclaredField(name);
+        declaredField.setAccessible(true);
+        declaredField.set(object, value);
     }
 
     /**
      * Used for setting Enum fields
      */
-    public static void setEnumField(Object obj, String value, String name)
+    public static void setEnumField(Object object, String value, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException,
             IllegalAccessException {
-        Field f = obj.getClass().getField(name);
-        f.set(obj, Enum.valueOf((Class<Enum>) f.getType(), value));
+        Field field = object.getClass().getField(name);
+        field.set(object, Enum.valueOf((Class<Enum>) field.getType(), value));
     }
 
     /**
      * Used for simplifying process of invoking private method
      * Automatically detects args types and founds method to get and invoke
      */
-    public static Object getMethodAndInvokeIt(Object obj, String methodName, Object... args)
+    public static Object getMethodAndInvokeIt(Object object, String methodName, Object... args)
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method method = obj.getClass().getDeclaredMethod(methodName, parameterTypes(args));
+        Method method = object.getClass().getDeclaredMethod(methodName, parameterTypes(args));
         method.setAccessible(true);
-        return method.invoke(obj, args);
+        return method.invoke(object, args);
     }
 
     private static Class[] parameterTypes(Object... args) {
