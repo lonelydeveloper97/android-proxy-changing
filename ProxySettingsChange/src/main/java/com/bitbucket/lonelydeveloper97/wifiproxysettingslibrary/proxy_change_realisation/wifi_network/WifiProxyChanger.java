@@ -19,7 +19,7 @@ public abstract class WifiProxyChanger {
             InstantiationException, IllegalAccessException, NoSuchFieldException,
             ApiNotSupportedException, NullWifiConfigurationException {
         updateWifiWithNewConfiguration(
-                getCurrentWifiConfiguretionWithUpdatedSettings(host, port, ProxySettings.STATIC, context),
+                getCurrentWifiConfigurationWithUpdatedSettings(host, port, ProxySettings.STATIC, context),
                 context);
     }
 
@@ -28,11 +28,11 @@ public abstract class WifiProxyChanger {
             NullWifiConfigurationException, ClassNotFoundException, NoSuchMethodException,
             InstantiationException, InvocationTargetException {
         updateWifiWithNewConfiguration(
-                getCurrentWifiConfiguretionWithUpdatedSettings("", 0, ProxySettings.NONE, context),
+                getCurrentWifiConfigurationWithUpdatedSettings("", 0, ProxySettings.NONE, context),
                 context);
     }
 
-    private static WifiConfiguration getCurrentWifiConfiguretionWithUpdatedSettings(String host, int port, ProxySettings proxySettings, Context context)
+    private static WifiConfiguration getCurrentWifiConfigurationWithUpdatedSettings(String host, int port, ProxySettings proxySettings, Context context)
             throws ApiNotSupportedException, IllegalAccessException, NullWifiConfigurationException,
             NoSuchFieldException, ClassNotFoundException, NoSuchMethodException,
             InstantiationException, InvocationTargetException {
