@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public abstract class ReflectionHelper {
 
     /**
-     * Uses for getting public fields with @hide annotation
+     * Used for getting public fields with @hide annotation
      */
     public static Object getField(Object obj, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException,
@@ -19,7 +19,7 @@ public abstract class ReflectionHelper {
     }
 
     /**
-     * Uses for getting private fields
+     * Used for getting private fields
      */
     public static Object getDeclaredField(Object obj, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException,
@@ -30,7 +30,7 @@ public abstract class ReflectionHelper {
     }
 
     /**
-     * Uses for setting private fields
+     * Used for setting private fields
      */
     public static void setDeclaredField(Object obj, String name, Object value)
             throws NoSuchFieldException, IllegalAccessException {
@@ -40,7 +40,7 @@ public abstract class ReflectionHelper {
     }
 
     /**
-     * Uses for setting Enum fields
+     * Used for setting Enum fields
      */
     public static void setEnumField(Object obj, String value, String name)
             throws SecurityException, NoSuchFieldException, IllegalArgumentException,
@@ -50,7 +50,7 @@ public abstract class ReflectionHelper {
     }
 
     /**
-     * Uses for simplifying process of invoking private method
+     * Used for simplifying process of invoking private method
      * Automatically detects args types and founds method to get and invoke
      */
     public static Object getMethodAndInvokeIt(Object obj, String methodName, Object... args)
