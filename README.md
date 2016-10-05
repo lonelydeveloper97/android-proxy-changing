@@ -1,5 +1,5 @@
 # android-proxy-changing
-Small android library that allows you to change wifi proxy settings programmatically. 
+Small android library that allows you to change wifi proxy settings programmatically(without root).
 
 Now avaliable for Jelly Bean, Kitkat, Lolipop. In progress - mobile proxy changing and improving library for work with Marshmallow.
 
